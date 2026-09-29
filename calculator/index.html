@@ -73,14 +73,14 @@ a{color:var(--accent)}
   </div>
 
   <div class="card">
-    <label class="lock"><input type="checkbox" id="lock"> Lock prices (prevent edits)</label>
-    <div class="row"><label id="wl">Weapon price<small id="ws"></small></label><input id="pw" type="number" min="0" step="0.11"></div>
-    <div class="row"><label id="kl">Kit price<small id="ks"></small></label><input id="pkit" type="number" min="0" step="0.11"></div>
-    <div class="row"><label id="tl">Target weapon price<small id="ts"></small></label><input id="ptw" type="number" min="0" step="0.11"></div>
-    <div class="row"><label>Battle-worn part<small>per part, ref</small></label><input id="pb" type="number" min="0" step="0.11"></div>
-    <div class="row"><label>Reinforced part<small>per part, ref</small></label><input id="pr" type="number" min="0" step="0.11"></div>
-    <div class="row" id="pristineRow"><label>Pristine part<small>per part, ref</small></label><input id="pp" type="number" min="0" step="0.11"></div>
-    <div class="row"><label>Key price<small>ref per key</small></label><input id="pk" type="number" min="0" step="0.05"></div>
+    <label class="lock"><input type="checkbox" id="lock"> Lock Prices (prevent edits)</label>
+    <div class="row"><label id="wl">Weapon Price<small id="ws"></small></label><input id="pw" type="number" min="0" step="0.11"></div>
+    <div class="row"><label id="kl">Kit Price<small id="ks"></small></label><input id="pkit" type="number" min="0" step="0.11"></div>
+    <div class="row"><label id="tl">Target Wweapon Price<small id="ts"></small></label><input id="ptw" type="number" min="0" step="0.11"></div>
+    <div class="row"><label>Battle-Worn Part<small>Per Part, Ref</small></label><input id="pb" type="number" min="0" step="0.11"></div>
+    <div class="row"><label>Reinforced Part<small>Per Part, Ref</small></label><input id="pr" type="number" min="0" step="0.11"></div>
+    <div class="row" id="pristineRow"><label>Pristine Part<small>Per Part, Ref</small></label><input id="pp" type="number" min="0" step="0.11"></div>
+    <div class="row"><label>Key Price<small>Ref Per Key</small></label><input id="pk" type="number" min="0" step="0.05"></div>
     <p class="note">Default values are placeholders. Enter current trade prices; they stay saved after refresh.</p>
   </div>
 
@@ -90,13 +90,13 @@ a{color:var(--accent)}
       <tbody id="rows"></tbody>
     </table>
     <div class="tot">
-      <div><span>Total in ref</span><b id="tRef">0 ref</b></div>
-      <div><span>Total in keys</span><b id="tKeys">0 keys</b></div>
-      <div><span>Keys + ref</span><b id="tMix">0 ref</b></div>
+      <div><span>Total in ref</span><b id="tRef">0 Ref</b></div>
+      <div><span>Total in keys</span><b id="tKeys">0 Keys</b></div>
+      <div><span>Keys + ref</span><b id="tMix">0 Ref</b></div>
     </div>
     <div class="save">
       <input type="text" id="name" placeholder="Item name (optional), e.g. Rocket Launcher">
-      <button class="btn" id="saveBtn">Save craft</button>
+      <button class="btn" id="saveBtn">Save Craft</button>
     </div>
   </div>
 
@@ -147,12 +147,12 @@ function fmtKeys(t,kp){return kp>0?f(t/kp)+" keys":"set key price"}
 function fmtMix(t,kp){
   if(!(kp>0))return "set key price";
   const k=Math.floor(t/kp+1e-9),r=t-k*kp;
-  return k+" key"+(k===1?"":"s")+" + "+f(r)+" ref";
+  return k+" key"+(k===1?"":"s")+" + "+f(r)+" Ref";
 }
 function render(){
   const c=R[mode];
-  $("wl").firstChild.textContent="Recipe weapon price";$("ws").textContent=c.ws;
-  $("tl").firstChild.textContent=(qual==="strange"?"Strange":"Unique")+" target weapon price";$("ts").textContent="weapon the kit is applied to (0 if you own it)";
+  $("wl").firstChild.textContent="Recipe Weapon Price";$("ws").textContent=c.ws;
+  $("tl").firstChild.textContent=(qual==="strange"?"Strange":"Unique")+" Target Weapon Price";$("ts").textContent="Weapon The Kit Is Applied To (0 if you own it)";
   $("kl").firstChild.textContent=c.kl;$("ks").textContent=c.ks;
   $("pristineRow").style.display=c.p?"":"none";
   const t=totalRef();
@@ -163,7 +163,7 @@ function render(){
 }
 function renderHist(){
   const el=$("hist");
-  if(!hist.length){el.innerHTML='<p class="empty">No crafts saved yet.</p>';$("clearBtn").style.display="none";return}
+  if(!hist.length){el.innerHTML='<p class="empty">No Crafts Saved Yet.</p>';$("clearBtn").style.display="none";return}
   $("clearBtn").style.display="";
   el.innerHTML=hist.map(h=>`<div class="h"><div class="top"><span>${esc(h.name||"Unnamed craft")} · ${h.qual==="strange"?"Strange ":""}${h.mode==="pro"?"Professional":"Specialized"}</span><span>${f(h.total)} ref</span></div>
   <div class="meta">${fmtMix(h.total,h.prices.pk)} · ${new Date(h.ts).toLocaleString()}</div>
