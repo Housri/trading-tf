@@ -62,7 +62,7 @@ a{color:var(--accent)}
 <main>
   <a href="../" style="display:inline-block;margin-bottom:10px;font-size:.85rem;color:var(--accent);text-decoration:none">← Back to main page</a>
   <h1>Killstreak Fabricator Calculator</h1>
-  <p class="sub">Cost To Craft A Killstreak Kit Fabricator Recipe. Prices Are Saved In This Browser.</p>
+  <p class="sub">Cost to craft a Killstreak Kit Fabricator recipe. Prices are saved in this browser.</p>
 
   <div class="card rand">
     <h2>🎲 Random kit</h2>
@@ -71,11 +71,11 @@ a{color:var(--accent)}
       <button class="btn spec" id="rSpec">Random Specialized</button>
       <button class="btn" id="rPro">Random Professional</button>
     </div>
-    <div class="big" id="rName">Press A Button To Get A Kit Idea</div>
+    <div class="big" id="rName">Press a button to get a kit idea</div>
     <div class="cls" id="rCls"></div>
-    <button class="btn ghost" id="rUse" style="display:none;width:100%">Use In Calculator</button>
+    <button class="btn ghost" id="rUse" style="display:none;width:100%">Use in calculator</button>
     <div class="chips" id="rHist"></div>
-    <p class="note">Only Picks A Kit Name To Try Crafting; Prices Are Not Affected. Weapon List Is Based On The Wiki's Weapon Roster, So Double-check The Fabricator In-game.</p>
+    <p class="note">Only picks a kit name to try crafting; prices are not affected. Weapon list is based on the wiki's weapon roster, so double-check the fabricator in-game.</p>
   </div>
 
   <div class="card" id="modeCard">
@@ -90,20 +90,20 @@ a{color:var(--accent)}
       <button data-q="unique" class="on">Unique</button>
       <button data-q="strange">Strange</button>
     </div>
-    <p class="note">Quality Of The Final Weapon You Apply The Kit To (E.g. Strange Professional Killstreak Bushwacka). Recipe Weapons Must Always Be Unique.</p>
+    <p class="note">Quality of the final weapon you apply the kit to (e.g. Strange Professional Killstreak Bushwacka). Recipe weapons must always be Unique.</p>
   </div>
 
-  <div Class="Card">
-    <label Class="Lock"><input Type="Checkbox" Id="Lock"> Lock Prices (Prevent Edits)</Label>
-    <div Class="Row"><label Id="Wl">weapon Price<small Id="Ws"></Small></Label><input Id="Pw" Type="Number" Min="0" Step="0.11"></Div>
-    <div Class="Row"><label Id="Kl">kit Price<small Id="Ks"></Small></Label><input Id="Pkit" Type="Number" Min="0" Step="0.11"></Div>
-    <div Class="Row"><label Id="Tl">target Weapon Price<small Id="Ts"></Small></Label><input Id="Ptw" Type="Number" Min="0" Step="0.11"></Div>
-    <div Class="Row"><label>battle-worn Part<small>per Part, Ref</Small></Label><input Id="Pb" Type="Number" Min="0" Step="0.11"></Div>
-    <div Class="Row"><label>reinforced Part<small>per Part, Ref</Small></Label><input Id="PR" Type="Number" Min="0" Step="0.11"></Div>
-    <div Class="Row" Id="Pristinerow"><label>pristine Part<small>per Part, Ref</Small></Label><input Id="Pp" Type="Number" Min="0" Step="0.11"></Div>
-    <div Class="Row"><label>key Price<small>ref Per Key</Small></Label><input Id="Pk" Type="Number" Min="0" Step="0.05"></Div>
-    <p Class="Note">default Values Are Placeholders. Enter Current Trade Prices; They Stay Saved After Refresh.</P>
-  </Div>
+  <div class="card">
+    <label class="lock"><input type="checkbox" id="lock"> Lock prices (prevent edits)</label>
+    <div class="row"><label id="wl">Weapon price<small id="ws"></small></label><input id="pw" type="number" min="0" step="0.11"></div>
+    <div class="row"><label id="kl">Kit price<small id="ks"></small></label><input id="pkit" type="number" min="0" step="0.11"></div>
+    <div class="row"><label id="tl">Target weapon price<small id="ts"></small></label><input id="ptw" type="number" min="0" step="0.11"></div>
+    <div class="row"><label>Battle-worn part<small>per part, ref</small></label><input id="pb" type="number" min="0" step="0.11"></div>
+    <div class="row"><label>Reinforced part<small>per part, ref</small></label><input id="pr" type="number" min="0" step="0.11"></div>
+    <div class="row" id="pristineRow"><label>Pristine part<small>per part, ref</small></label><input id="pp" type="number" min="0" step="0.11"></div>
+    <div class="row"><label>Key price<small>ref per key</small></label><input id="pk" type="number" min="0" step="0.05"></div>
+    <p class="note">Default values are placeholders. Enter current trade prices; they stay saved after refresh.</p>
+  </div>
 
   <div class="card">
     <table>
@@ -111,9 +111,9 @@ a{color:var(--accent)}
       <tbody id="rows"></tbody>
     </table>
     <div class="tot">
-      <div><span>total In Ref</Span><b Id="Tref">0 Ref</B></Div>
-      <div><span>total In Keys</Span><b Id="Tkeys">0 Keys</B></Div>
-      <div><span>keys + Ref</Span><b Id="Tmix">0 Ref</B></Div>
+      <div><span>Total in ref</span><b id="tRef">0 ref</b></div>
+      <div><span>Total in keys</span><b id="tKeys">0 keys</b></div>
+      <div><span>Keys + ref</span><b id="tMix">0 ref</b></div>
     </div>
     <div class="save">
       <input type="text" id="name" placeholder="Item name (optional), e.g. Rocket Launcher">
@@ -124,10 +124,10 @@ a{color:var(--accent)}
   <div class="card">
     <h2>History</h2>
     <div id="hist"></div>
-    <button class="btn ghost del" id="clearBtn" style="margin-top:8px">Clear History</button>
+    <button class="btn ghost del" id="clearBtn" style="margin-top:8px">Clear history</button>
   </div>
 
-  <p class="note">Recipes From The <a href="https://wiki.teamfortress.com/wiki/Killstreak_Kit_Fabricator" target="_blank" rel="noopener">TF2 Wiki</a>. Weapons Must Be Unique Quality. Specialized Needs 1 Weapon With A Killstreak Kit; Professional Needs 2 Weapons With Specialized Kits.</p>
+  <p class="note">Recipes from the <a href="https://wiki.teamfortress.com/wiki/Killstreak_Kit_Fabricator" target="_blank" rel="noopener">TF2 Wiki</a>. Weapons must be Unique quality. Specialized needs 1 weapon with a Killstreak Kit; Professional needs 2 weapons with Specialized Kits.</p>
 </main>
 <script>
 const R={
