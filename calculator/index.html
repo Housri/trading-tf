@@ -41,6 +41,13 @@ th{color:var(--muted);font-weight:500;font-size:.75rem}
 .btn{padding:9px 14px;border-radius:8px;border:none;background:var(--accent);color:var(--accent-t);font-weight:600;cursor:pointer;font-size:.9rem}
 .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text);padding:6px 10px;font-size:.8rem}
 .btn.del{color:var(--danger)}
+.rand .big{font-size:1.15rem;font-weight:700;text-align:center;margin:12px 0 2px;min-height:1.5em;color:var(--accent)}
+.rand .cls{text-align:center;color:var(--muted);font-size:.8rem;min-height:1.2em;margin-bottom:10px}
+.rand select{width:100%;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--text);font-size:.9rem;margin-bottom:8px}
+.rand .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rand .btn{width:100%}.rand .btn.spec{background:var(--spec)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chips button{font-size:.72rem;padding:4px 8px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer}
 .note{color:var(--muted);font-size:.75rem;margin-top:8px}
 .h{border-top:1px solid var(--line);padding:10px 0}
 .h:first-of-type{border-top:none}
@@ -57,7 +64,21 @@ a{color:var(--accent)}
   <h1>Killstreak Fabricator Calculator</h1>
   <p class="sub">Cost To Craft A Killstreak Kit Fabricator Recipe. Prices Are Saved In This Browser.</p>
 
-  <div class="card">
+  <div class="card rand">
+    <h2>🎲 Random kit</h2>
+    <select id="rc" aria-label="Class filter"></select>
+    <div class="two">
+      <button class="btn spec" id="rSpec">Random Specialized</button>
+      <button class="btn" id="rPro">Random Professional</button>
+    </div>
+    <div class="big" id="rName">Press A Button To Get A Kit Idea</div>
+    <div class="cls" id="rCls"></div>
+    <button class="btn ghost" id="rUse" style="display:none;width:100%">Use In Calculator</button>
+    <div class="chips" id="rHist"></div>
+    <p class="note">Only Picks A Kit Name To Try Crafting; Prices Are Not Affected. Weapon List Is Based On The Wiki's Weapon Roster, So Double-check The Fabricator In-game.</p>
+  </div>
+
+  <div class="card" id="modeCard">
     <div class="toggle">
       <button data-m="spec" class="on">Specialized</button>
       <button data-m="pro">Professional</button>
@@ -72,17 +93,17 @@ a{color:var(--accent)}
     <p class="note">Quality Of The Final Weapon You Apply The Kit To (E.g. Strange Professional Killstreak Bushwacka). Recipe Weapons Must Always Be Unique.</p>
   </div>
 
-  <div class="card">
-    <label class="lock"><input type="checkbox" id="lock"> Lock Prices (Prevent Edits)</label>
-    <div class="row"><label id="wl">Weapon Price<small id="ws"></small></label><input id="pw" type="number" min="0" step="0.11"></div>
-    <div class="row"><label id="kl">Kit Price<small id="ks"></small></label><input id="pkit" type="number" min="0" step="0.11"></div>
-    <div class="row"><label id="tl">Target Wweapon Price<small id="ts"></small></label><input id="ptw" type="number" min="0" step="0.11"></div>
-    <div class="row"><label>Battle-Worn Part<small>Per Part, Ref</small></label><input id="pb" type="number" min="0" step="0.11"></div>
-    <div class="row"><label>Reinforced Part<small>Per Part, Ref</small></label><input id="pr" type="number" min="0" step="0.11"></div>
-    <div class="row" id="pristineRow"><label>Pristine Part<small>Per Part, Ref</small></label><input id="pp" type="number" min="0" step="0.11"></div>
-    <div class="row"><label>Key Price<small>Ref Per Key</small></label><input id="pk" type="number" min="0" step="0.05"></div>
-    <p class="note">Default Values Are Placeholders. Enter Current Trade Prices; They Stay Saved After Refresh.</p>
-  </div>
+  <div Class="Card">
+    <label Class="Lock"><input Type="Checkbox" Id="Lock"> Lock Prices (Prevent Edits)</Label>
+    <div Class="Row"><label Id="Wl">weapon Price<small Id="Ws"></Small></Label><input Id="Pw" Type="Number" Min="0" Step="0.11"></Div>
+    <div Class="Row"><label Id="Kl">kit Price<small Id="Ks"></Small></Label><input Id="Pkit" Type="Number" Min="0" Step="0.11"></Div>
+    <div Class="Row"><label Id="Tl">target Weapon Price<small Id="Ts"></Small></Label><input Id="Ptw" Type="Number" Min="0" Step="0.11"></Div>
+    <div Class="Row"><label>battle-worn Part<small>per Part, Ref</Small></Label><input Id="Pb" Type="Number" Min="0" Step="0.11"></Div>
+    <div Class="Row"><label>reinforced Part<small>per Part, Ref</Small></Label><input Id="PR" Type="Number" Min="0" Step="0.11"></Div>
+    <div Class="Row" Id="Pristinerow"><label>pristine Part<small>per Part, Ref</Small></Label><input Id="Pp" Type="Number" Min="0" Step="0.11"></Div>
+    <div Class="Row"><label>key Price<small>ref Per Key</Small></Label><input Id="Pk" Type="Number" Min="0" Step="0.05"></Div>
+    <p Class="Note">default Values Are Placeholders. Enter Current Trade Prices; They Stay Saved After Refresh.</P>
+  </Div>
 
   <div class="card">
     <table>
@@ -90,28 +111,28 @@ a{color:var(--accent)}
       <tbody id="rows"></tbody>
     </table>
     <div class="tot">
-      <div><span>Total In Ref</span><b id="tRef">0 Ref</b></div>
-      <div><span>Total In Keys</span><b id="tKeys">0 Keys</b></div>
-      <div><span>Keys + Ref</span><b id="tMix">0 Ref</b></div>
+      <div><span>total In Ref</Span><b Id="Tref">0 Ref</B></Div>
+      <div><span>total In Keys</Span><b Id="Tkeys">0 Keys</B></Div>
+      <div><span>keys + Ref</Span><b Id="Tmix">0 Ref</B></Div>
     </div>
     <div class="save">
-      <input type="text" id="name" placeholder="Item Name (Optional), E.g. Rocket Launcher">
-      <button class="btn" id="saveBtn">Save Craft</button>
+      <input type="text" id="name" placeholder="Item name (optional), e.g. Rocket Launcher">
+      <button class="btn" id="saveBtn">Save craft</button>
     </div>
   </div>
 
   <div class="card">
     <h2>History</h2>
     <div id="hist"></div>
-    <button class="btn ghost del" id="clearBtn" style="margin-top:8px">Clear history</button>
+    <button class="btn ghost del" id="clearBtn" style="margin-top:8px">Clear History</button>
   </div>
 
   <p class="note">Recipes From The <a href="https://wiki.teamfortress.com/wiki/Killstreak_Kit_Fabricator" target="_blank" rel="noopener">TF2 Wiki</a>. Weapons Must Be Unique Quality. Specialized Needs 1 Weapon With A Killstreak Kit; Professional Needs 2 Weapons With Specialized Kits.</p>
 </main>
 <script>
 const R={
-  spec:{w:1,wl:"Weapon price",ws:"1 Unique weapon, per weapon (ref)",kl:"Killstreak Kit Price",ks:"applied to the weapon (ref)",b:24,r:5,p:0,kitName:"Killstreak Kit"},
-  pro:{w:2,wl:"Weapon price",ws:"2 Unique weapons, per weapon (ref)",kl:"Specialized Kit Price",ks:"applied to each weapon (ref)",b:16,r:6,p:3,kitName:"Specialized Kit"}
+  spec:{w:1,wl:"Weapon price",ws:"1 Unique weapon, per weapon (ref)",kl:"Killstreak Kit price",ks:"applied to the weapon (ref)",b:24,r:5,p:0,kitName:"Killstreak Kit"},
+  pro:{w:2,wl:"Weapon price",ws:"2 Unique weapons, per weapon (ref)",kl:"Specialized Kit price",ks:"applied to each weapon (ref)",b:16,r:6,p:3,kitName:"Specialized Kit"}
 };
 const DEF={ptu:0.33,pts:1,pw:0.33,pkitspec:0.33,pkitpro:3,pb:0.11,pr:0.33,pp:0.55,pk:60};
 const $=id=>document.getElementById(id);
@@ -147,12 +168,12 @@ function fmtKeys(t,kp){return kp>0?f(t/kp)+" keys":"set key price"}
 function fmtMix(t,kp){
   if(!(kp>0))return "set key price";
   const k=Math.floor(t/kp+1e-9),r=t-k*kp;
-  return k+" key"+(k===1?"":"s")+" + "+f(r)+" Ref";
+  return k+" key"+(k===1?"":"s")+" + "+f(r)+" ref";
 }
 function render(){
   const c=R[mode];
-  $("wl").firstChild.textContent="Recipe Weapon Price";$("ws").textContent=c.ws;
-  $("tl").firstChild.textContent=(qual==="strange"?"Strange":"Unique")+" Target Weapon Price";$("ts").textContent="Weapon The Kit Is Applied To (0 if you own it)";
+  $("wl").firstChild.textContent="Recipe weapon price";$("ws").textContent=c.ws;
+  $("tl").firstChild.textContent=(qual==="strange"?"Strange":"Unique")+" target weapon price";$("ts").textContent="weapon the kit is applied to (0 if you own it)";
   $("kl").firstChild.textContent=c.kl;$("ks").textContent=c.ks;
   $("pristineRow").style.display=c.p?"":"none";
   const t=totalRef();
@@ -163,7 +184,7 @@ function render(){
 }
 function renderHist(){
   const el=$("hist");
-  if(!hist.length){el.innerHTML='<p class="empty">No Crafts Saved Yet.</p>';$("clearBtn").style.display="none";return}
+  if(!hist.length){el.innerHTML='<p class="empty">No crafts saved yet.</p>';$("clearBtn").style.display="none";return}
   $("clearBtn").style.display="";
   el.innerHTML=hist.map(h=>`<div class="h"><div class="top"><span>${esc(h.name||"Unnamed craft")} · ${h.qual==="strange"?"Strange ":""}${h.mode==="pro"?"Professional":"Specialized"}</span><span>${f(h.total)} ref</span></div>
   <div class="meta">${fmtMix(h.total,h.prices.pk)} · ${new Date(h.ts).toLocaleString()}</div>
@@ -201,6 +222,51 @@ $("hist").onclick=e=>{
   if(d){hist=hist.filter(x=>x.id!==d);store("ksf_hist",hist);renderHist()}
 };
 $("clearBtn").onclick=()=>{if(confirm("Clear all history?")){hist=[];store("ksf_hist",hist);renderHist()}};
+
+/* ---- Random kit generator ---- */
+const W={
+Scout:["Scattergun","Force-a-Nature","Shortstop","Soda Popper","Baby Face's Blaster","Back Scatter","Pistol","Lugermorph","C.A.P.P.E.R","Winger","Pretty Boy's Pocket Pistol","Flying Guillotine","Bat","Holy Mackerel","Unarmed Combat","Batsaber","Sandman","Candy Cane","Boston Basher","Three-Rune Blade","Sun-on-a-Stick","Fan O'War","Atomizer","Wrap Assassin"],
+Soldier:["Rocket Launcher","Original","Direct Hit","Black Box","Liberty Launcher","Cow Mangler 5000","Beggar's Bazooka","Air Strike","Shotgun","Reserve Shooter","Mantreads","Righteous Bison","Panic Attack","Shovel","Equalizer","Pain Train","Half-Zatoichi","Disciplinary Action","Market Gardener","Escape Plan"],
+Pyro:["Flame Thrower","Rainblower","Nostromo Napalmer","Backburner","Degreaser","Phlogistinator","Dragon's Fury","Shotgun","Reserve Shooter","Flare Gun","Detonator","Manmelter","Scorch Shot","Panic Attack","Fire Axe","Lollichop","Axtinguisher","Postal Pummeler","Homewrecker","Maul","Powerjack","Back Scratcher","Sharpened Volcano Fragment","Third Degree","Neon Annihilator","Hot Hand"],
+Demoman:["Grenade Launcher","Loch-n-Load","Loose Cannon","Iron Bomber","Stickybomb Launcher","Scottish Resistance","Chargin' Targe","Splendid Screen","Tide Turner","Quickiebomb Launcher","Bottle","Scottish Handshake","Eyelander","Horseless Headless Horsemann's Headtaker","Nessie's Nine Iron","Scotsman's Skullcutter","Pain Train","Ullapool Caber","Claidheamh M\u00f2r","Half-Zatoichi","Persian Persuader"],
+Heavy:["Minigun","Iron Curtain","Natascha","Brass Beast","Tomislav","Huo-Long Heater","Shotgun","Family Business","Panic Attack","Fists","Killing Gloves of Boxing","Gloves of Running Urgently","Warrior's Spirit","Fists of Steel","Eviction Notice","Apoco-Fists","Holiday Punch"],
+Engineer:["Shotgun","Frontier Justice","Widowmaker","Pomson 6000","Rescue Ranger","Pistol","Lugermorph","Short Circuit","Wrench","Gunslinger","Southern Hospitality","Jag","Eureka Effect"],
+Medic:["Syringe Gun","Blutsauger","Crusader's Crossbow","Overdose","Medi Gun","Kritzkrieg","Quick-Fix","Vaccinator","Bonesaw","Ubersaw","Vita-Saw","Amputator","Solemn Vow"],
+Sniper:["Sniper Rifle","AWPer Hand","Huntsman","Fortified Compound","Sydney Sleeper","Bazaar Bargain","Machina","Hitman's Heatmaker","Classic","Shooting Star","SMG","Cleaner's Carbine","Kukri","Tribalman's Shiv","Bushwacka","Shahanshah"],
+Spy:["Revolver","Big Kill","Ambassador","L'Etranger","Enforcer","Diamondback","Knife","Your Eternal Reward","Conniver's Kunai","Big Earner","Spy-cicle","Wanga Prick","Black Rose","Sharp Dresser"],
+"All-class":["Frying Pan","Conscientious Objector"]
+};
+const ALLW={};for(const c in W)W[c].forEach(n=>{(ALLW[n]=ALLW[n]||[]).includes(c)||ALLW[n].push(c)});
+const rc=$("rc");
+rc.innerHTML='<option value="All">All classes</option>'+Object.keys(W).map(c=>`<option>${c}</option>`).join("");
+let rLast=null,rolls=[],rCur=null;
+function showRoll(r){
+  rCur=r;
+  $("rName").textContent=(r.tier==="pro"?"Professional":"Specialized")+" Killstreak "+r.n+" Kit";
+  $("rCls").textContent=ALLW[r.n].join(" / ");
+  $("rUse").style.display="";
+}
+function roll(tier){
+  const pool=rc.value==="All"?Object.keys(ALLW):W[rc.value];
+  let n;
+  do{n=pool[Math.floor(Math.random()*pool.length)]}while(pool.length>1&&n===rLast);
+  rLast=n;
+  const r={tier,n};
+  rolls.unshift(r);rolls=rolls.slice(0,6);
+  showRoll(r);drawRolls();
+}
+function drawRolls(){
+  const el=$("rHist");el.innerHTML="";
+  rolls.forEach(r=>{const b=document.createElement("button");b.textContent=(r.tier==="pro"?"Pro ":"Spec ")+r.n;b.onclick=()=>showRoll(r);el.appendChild(b)});
+}
+$("rSpec").onclick=()=>roll("spec");
+$("rPro").onclick=()=>roll("pro");
+$("rUse").onclick=()=>{
+  if(!rCur)return;
+  $("name").value=rCur.n;
+  setMode(rCur.tier);
+  $("modeCard").scrollIntoView({behavior:"smooth"});
+};
 
 prices={...DEF,...load("ksf_prices",{})};
 hist=load("ksf_hist",[]);
