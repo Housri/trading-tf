@@ -55,7 +55,7 @@ a{color:var(--accent)}
 <main>
   <a href="../" style="display:inline-block;margin-bottom:10px;font-size:.85rem;color:var(--accent);text-decoration:none">← Back to main page</a>
   <h1>Killstreak Fabricator Calculator</h1>
-  <p class="sub">Cost to craft a Killstreak Kit Fabricator recipe. Prices are saved in this browser.</p>
+  <p class="sub">Cost To Craft A Killstreak Kit Fabricator Recipe. Prices Are Saved In This Browser.</p>
 
   <div class="card">
     <div class="toggle">
@@ -69,11 +69,11 @@ a{color:var(--accent)}
       <button data-q="unique" class="on">Unique</button>
       <button data-q="strange">Strange</button>
     </div>
-    <p class="note">Quality of the final weapon you apply the kit to (e.g. Strange Professional Killstreak Bushwacka). Recipe weapons must always be Unique.</p>
+    <p class="note">Quality Of The Final Weapon You Apply The Kit To (E.g. Strange Professional Killstreak Bushwacka). Recipe Weapons Must Always Be Unique.</p>
   </div>
 
   <div class="card">
-    <label class="lock"><input type="checkbox" id="lock"> Lock Prices (prevent edits)</label>
+    <label class="lock"><input type="checkbox" id="lock"> Lock Prices (Prevent Edits)</label>
     <div class="row"><label id="wl">Weapon Price<small id="ws"></small></label><input id="pw" type="number" min="0" step="0.11"></div>
     <div class="row"><label id="kl">Kit Price<small id="ks"></small></label><input id="pkit" type="number" min="0" step="0.11"></div>
     <div class="row"><label id="tl">Target Wweapon Price<small id="ts"></small></label><input id="ptw" type="number" min="0" step="0.11"></div>
@@ -81,7 +81,7 @@ a{color:var(--accent)}
     <div class="row"><label>Reinforced Part<small>Per Part, Ref</small></label><input id="pr" type="number" min="0" step="0.11"></div>
     <div class="row" id="pristineRow"><label>Pristine Part<small>Per Part, Ref</small></label><input id="pp" type="number" min="0" step="0.11"></div>
     <div class="row"><label>Key Price<small>Ref Per Key</small></label><input id="pk" type="number" min="0" step="0.05"></div>
-    <p class="note">Default values are placeholders. Enter current trade prices; they stay saved after refresh.</p>
+    <p class="note">Default Values Are Placeholders. Enter Current Trade Prices; They Stay Saved After Refresh.</p>
   </div>
 
   <div class="card">
@@ -90,12 +90,12 @@ a{color:var(--accent)}
       <tbody id="rows"></tbody>
     </table>
     <div class="tot">
-      <div><span>Total in ref</span><b id="tRef">0 Ref</b></div>
-      <div><span>Total in keys</span><b id="tKeys">0 Keys</b></div>
-      <div><span>Keys + ref</span><b id="tMix">0 Ref</b></div>
+      <div><span>Total In Ref</span><b id="tRef">0 Ref</b></div>
+      <div><span>Total In Keys</span><b id="tKeys">0 Keys</b></div>
+      <div><span>Keys + Ref</span><b id="tMix">0 Ref</b></div>
     </div>
     <div class="save">
-      <input type="text" id="name" placeholder="Item name (optional), e.g. Rocket Launcher">
+      <input type="text" id="name" placeholder="Item Name (Optional), E.g. Rocket Launcher">
       <button class="btn" id="saveBtn">Save Craft</button>
     </div>
   </div>
@@ -106,12 +106,12 @@ a{color:var(--accent)}
     <button class="btn ghost del" id="clearBtn" style="margin-top:8px">Clear history</button>
   </div>
 
-  <p class="note">Recipes from the <a href="https://wiki.teamfortress.com/wiki/Killstreak_Kit_Fabricator" target="_blank" rel="noopener">TF2 Wiki</a>. Weapons must be Unique quality. Specialized needs 1 weapon with a Killstreak Kit; Professional needs 2 weapons with Specialized Kits.</p>
+  <p class="note">Recipes From The <a href="https://wiki.teamfortress.com/wiki/Killstreak_Kit_Fabricator" target="_blank" rel="noopener">TF2 Wiki</a>. Weapons Must Be Unique Quality. Specialized Needs 1 Weapon With A Killstreak Kit; Professional Needs 2 Weapons With Specialized Kits.</p>
 </main>
 <script>
 const R={
-  spec:{w:1,wl:"Weapon price",ws:"1 Unique weapon, per weapon (ref)",kl:"Killstreak Kit price",ks:"applied to the weapon (ref)",b:24,r:5,p:0,kitName:"Killstreak Kit"},
-  pro:{w:2,wl:"Weapon price",ws:"2 Unique weapons, per weapon (ref)",kl:"Specialized Kit price",ks:"applied to each weapon (ref)",b:16,r:6,p:3,kitName:"Specialized Kit"}
+  spec:{w:1,wl:"Weapon price",ws:"1 Unique weapon, per weapon (ref)",kl:"Killstreak Kit Price",ks:"applied to the weapon (ref)",b:24,r:5,p:0,kitName:"Killstreak Kit"},
+  pro:{w:2,wl:"Weapon price",ws:"2 Unique weapons, per weapon (ref)",kl:"Specialized Kit Price",ks:"applied to each weapon (ref)",b:16,r:6,p:3,kitName:"Specialized Kit"}
 };
 const DEF={ptu:0.33,pts:1,pw:0.33,pkitspec:0.33,pkitpro:3,pb:0.11,pr:0.33,pp:0.55,pk:60};
 const $=id=>document.getElementById(id);
