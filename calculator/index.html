@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Killstreak Fabricator Calculator</title>
+<style>
+:root{--bg:#f4f1ea;--card:#fff;--text:#1f1d1a;--muted:#6b665d;--line:#ddd6c8;--accent:#cf7336;--accent-t:#fff;--spec:#6b8e23;--danger:#b3402a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1917;--card:#252320;--text:#eee9df;--muted:#a19a8c;--line:#3a3630;--accent:#e08a4c;--accent-t:#1a1917;--spec:#9bbf45;--danger:#e0705a}}
+:root[data-theme="dark"]{--bg:#1a1917;--card:#252320;--text:#eee9df;--muted:#a19a8c;--line:#3a3630;--accent:#e08a4c;--accent-t:#1a1917;--spec:#9bbf45;--danger:#e0705a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.4}
+main{max-width:520px;margin:0 auto;padding:20px 16px 32px}
+h1{font-size:1.3rem;margin:0 0 4px}
+h2{font-size:1rem;margin:0 0 8px}
+.sub{color:var(--muted);font-size:.85rem;margin:0 0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px}
+.toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.toggle button{padding:10px;border-radius:10px;border:2px solid var(--line);background:transparent;color:var(--text);font-weight:600;font-size:.95rem;cursor:pointer}
+.toggle button.on{border-color:var(--accent);background:var(--accent);color:var(--accent-t)}
+.toggle button[data-m="spec"].on{border-color:var(--spec);background:var(--spec)}
+#qual{margin-bottom:0}
+#qual button[data-q="strange"].on{border-color:#cf6a32;background:#cf6a32;color:#fff}
+.row{display:grid;grid-template-columns:1fr 110px;gap:10px;align-items:center;padding:6px 0}
+.row label{font-size:.9rem}
+.row small{display:block;color:var(--muted);font-size:.75rem}
+input[type=number],input[type=text]{width:100%;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--text);font-size:.95rem}
+input:disabled{opacity:.55}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{padding:6px 4px;text-align:right;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--muted);font-weight:500;font-size:.75rem}
+.tot{display:grid;gap:6px;margin-top:12px}
+.tot div{display:flex;justify-content:space-between;align-items:baseline;padding:8px 10px;border-radius:8px;background:var(--bg)}
+.tot span{color:var(--muted);font-size:.8rem}
+.tot b{font-size:1.1rem;color:var(--accent)}
+.lock{display:flex;align-items:center;gap:8px;font-size:.85rem;margin-bottom:6px;cursor:pointer}
+.save{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:12px}
+.btn{padding:9px 14px;border-radius:8px;border:none;background:var(--accent);color:var(--accent-t);font-weight:600;cursor:pointer;font-size:.9rem}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text);padding:6px 10px;font-size:.8rem}
+.btn.del{color:var(--danger)}
+.note{color:var(--muted);font-size:.75rem;margin-top:8px}
+.h{border-top:1px solid var(--line);padding:10px 0}
+.h:first-of-type{border-top:none}
+.h .top{display:flex;justify-content:space-between;gap:8px;font-weight:600;font-size:.9rem}
+.h .meta{color:var(--muted);font-size:.75rem;margin:2px 0 6px}
+.h .acts{display:flex;gap:6px}
+.empty{color:var(--muted);font-size:.85rem}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<main>
+  <a href="../" style="display:inline-block;margin-bottom:10px;font-size:.85rem;color:var(--accent);text-decoration:none">← Back to main page</a>
+  <h1>Killstreak Fabricator Calculator</h1>
+  <p class="sub">Cost to craft a Killstreak Kit Fabricator recipe. Prices are saved in this browser.</p>
+
+  <div class="card">
+    <div class="toggle">
+      <button data-m="spec" class="on">Specialized</button>
+      <button data-m="pro">Professional</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="toggle" id="qual">
+      <button data-q="unique" class="on">Unique</button>
+      <button data-q="strange">Strange</button>
+    </div>
+    <p class="note">Quality of the final weapon you apply the kit to (e.g. Strange Professional Killstreak Bushwacka). Recipe weapons must always be Unique.</p>
+  </div>
+
+  <div class="card">
+    <label class="lock"><input type="checkbox" id="lock"> Lock prices (prevent edits)</label>
+    <div class="row"><label id="wl">Weapon price<small id="ws"></small></label><input id="pw" type="number" min="0" step="0.11"></div>
+    <div class="row"><label id="kl">Kit price<small id="ks"></small></label><input id="pkit" type="number" min="0" step="0.11"></div>
+    <div class="row"><label id="tl">Target weapon price<small id="ts"></small></label><input id="ptw" type="number" min="0" step="0.11"></div>
+    <div class="row"><label>Battle-worn part<small>per part, ref</small></label><input id="pb" type="number" min="0" step="0.11"></div>
+    <div class="row"><label>Reinforced part<small>per part, ref</small></label><input id="pr" type="number" min="0" step="0.11"></div>
+    <div class="row" id="pristineRow"><label>Pristine part<small>per part, ref</small></label><input id="pp" type="number" min="0" step="0.11"></div>
+    <div class="row"><label>Key price<small>ref per key</small></label><input id="pk" type="number" min="0" step="0.05"></div>
+    <p class="note">Default values are placeholders. Enter current trade prices; they stay saved after refresh.</p>
+  </div>
+
+  <div class="card">
+    <table>
+      <thead><tr><th>Ingredient</th><th>Qty</th><th>Each</th><th>Subtotal</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="tot">
+      <div><span>Total in ref</span><b id="tRef">0 ref</b></div>
+      <div><span>Total in keys</span><b id="tKeys">0 keys</b></div>
+      <div><span>Keys + ref</span><b id="tMix">0 ref</b></div>
+    </div>
+    <div class="save">
+      <input type="text" id="name" placeholder="Item name (optional), e.g. Rocket Launcher">
+      <button class="btn" id="saveBtn">Save craft</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>History</h2>
+    <div id="hist"></div>
+    <button class="btn ghost del" id="clearBtn" style="margin-top:8px">Clear history</button>
+  </div>
+
+  <p class="note">Recipes from the <a href="https://wiki.teamfortress.com/wiki/Killstreak_Kit_Fabricator" target="_blank" rel="noopener">TF2 Wiki</a>. Weapons must be Unique quality. Specialized needs 1 weapon with a Killstreak Kit; Professional needs 2 weapons with Specialized Kits.</p>
+</main>
+<script>
+const R={
+  spec:{w:1,wl:"Weapon price",ws:"1 Unique weapon, per weapon (ref)",kl:"Killstreak Kit price",ks:"applied to the weapon (ref)",b:24,r:5,p:0,kitName:"Killstreak Kit"},
+  pro:{w:2,wl:"Weapon price",ws:"2 Unique weapons, per weapon (ref)",kl:"Specialized Kit price",ks:"applied to each weapon (ref)",b:16,r:6,p:3,kitName:"Specialized Kit"}
+};
+const DEF={ptu:0.33,pts:1,pw:0.33,pkitspec:0.33,pkitpro:3,pb:0.11,pr:0.33,pp:0.55,pk:60};
+const $=id=>document.getElementById(id);
+const IDS=["pw","pb","pr","pp","pk"];
+let mode="spec",qual="unique",prices={...DEF},hist=[];
+function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function store(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+const f=x=>(Math.round(x*100)/100).toString();
+const num=id=>parseFloat($(id).value)||0;
+
+function tKey(){return qual==="strange"?"pts":"ptu"}
+function kitKey(){return mode==="spec"?"pkitspec":"pkitpro"}
+function writeInputs(){
+  IDS.forEach(id=>$(id).value=prices[id]);
+  $("pkit").value=prices[kitKey()];
+  $("ptw").value=prices[tKey()];
+}
+function readInputs(){
+  IDS.forEach(id=>prices[id]=num(id));
+  prices[kitKey()]=num("pkit");
+  prices[tKey()]=num("ptw");
+  store("ksf_prices",prices);
+}
+function lines(){
+  const c=R[mode];
+  const kit=prices[kitKey()];
+  const l=[[qual==="strange"?"Target weapon (Strange)":"Target weapon (Unique)",1,prices[tKey()]],["Recipe weapon"+(c.w>1?"s (Unique)":" (Unique)"),c.w,prices.pw],[c.kitName,c.w,kit],["Battle-worn parts",c.b,prices.pb],["Reinforced parts",c.r,prices.pr]];
+  if(c.p)l.push(["Pristine parts",c.p,prices.pp]);
+  return l;
+}
+function totalRef(){return lines().reduce((s,[,q,e])=>s+q*e,0)}
+function fmtKeys(t,kp){return kp>0?f(t/kp)+" keys":"set key price"}
+function fmtMix(t,kp){
+  if(!(kp>0))return "set key price";
+  const k=Math.floor(t/kp+1e-9),r=t-k*kp;
+  return k+" key"+(k===1?"":"s")+" + "+f(r)+" ref";
+}
+function render(){
+  const c=R[mode];
+  $("wl").firstChild.textContent="Recipe weapon price";$("ws").textContent=c.ws;
+  $("tl").firstChild.textContent=(qual==="strange"?"Strange":"Unique")+" target weapon price";$("ts").textContent="weapon the kit is applied to (0 if you own it)";
+  $("kl").firstChild.textContent=c.kl;$("ks").textContent=c.ks;
+  $("pristineRow").style.display=c.p?"":"none";
+  const t=totalRef();
+  $("rows").innerHTML=lines().map(([nm,q,e])=>`<tr><td>${nm}</td><td>${q}</td><td>${f(e)}</td><td>${f(q*e)}</td></tr>`).join("");
+  $("tRef").textContent=f(t)+" ref";
+  $("tKeys").textContent=fmtKeys(t,prices.pk);
+  $("tMix").textContent=fmtMix(t,prices.pk);
+}
+function renderHist(){
+  const el=$("hist");
+  if(!hist.length){el.innerHTML='<p class="empty">No crafts saved yet.</p>';$("clearBtn").style.display="none";return}
+  $("clearBtn").style.display="";
+  el.innerHTML=hist.map(h=>`<div class="h"><div class="top"><span>${esc(h.name||"Unnamed craft")} · ${h.qual==="strange"?"Strange ":""}${h.mode==="pro"?"Professional":"Specialized"}</span><span>${f(h.total)} ref</span></div>
+  <div class="meta">${fmtMix(h.total,h.prices.pk)} · ${new Date(h.ts).toLocaleString()}</div>
+  <div class="acts"><button class="btn ghost" data-reuse="${h.id}">Reuse</button><button class="btn ghost del" data-del="${h.id}">Delete</button></div></div>`).join("");
+}
+function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function setMode(m){
+  mode=m;
+  document.querySelectorAll(".toggle button").forEach(x=>x.classList.toggle("on",x.dataset.m===m));
+  writeInputs();render();
+}
+document.querySelectorAll(".toggle button").forEach(b=>b.onclick=()=>setMode(b.dataset.m));
+[...IDS,"pkit","ptw"].forEach(id=>$(id).oninput=()=>{readInputs();render()});
+function setQual(q){
+  qual=q;
+  document.querySelectorAll("#qual button").forEach(x=>x.classList.toggle("on",x.dataset.q===q));
+  writeInputs();render();
+}
+document.querySelectorAll("#qual button").forEach(b=>b.onclick=()=>setQual(b.dataset.q));
+$("lock").onchange=()=>{
+  const l=$("lock").checked;store("ksf_lock",l);
+  [...IDS,"pkit","ptw"].forEach(id=>$(id).disabled=l);
+};
+$("saveBtn").onclick=()=>{
+  hist.unshift({id:Date.now().toString(36),name:$("name").value.trim(),mode,qual,total:totalRef(),prices:{...prices},ts:Date.now()});
+  hist=hist.slice(0,50);store("ksf_hist",hist);$("name").value="";renderHist();
+};
+$("hist").onclick=e=>{
+  const r=e.target.dataset.reuse,d=e.target.dataset.del;
+  if(r){
+    const h=hist.find(x=>x.id===r);if(!h)return;
+    prices={...DEF,...h.prices};store("ksf_prices",prices);
+    $("name").value=h.name||"";qual=h.qual||"unique";document.querySelectorAll("#qual button").forEach(x=>x.classList.toggle("on",x.dataset.q===qual));setMode(h.mode);window.scrollTo({top:0,behavior:"smooth"});
+  }
+  if(d){hist=hist.filter(x=>x.id!==d);store("ksf_hist",hist);renderHist()}
+};
+$("clearBtn").onclick=()=>{if(confirm("Clear all history?")){hist=[];store("ksf_hist",hist);renderHist()}};
+
+prices={...DEF,...load("ksf_prices",{})};
+hist=load("ksf_hist",[]);
+$("lock").checked=!!load("ksf_lock",false);
+$("lock").onchange();
+writeInputs();render();renderHist();
+</script>
+</body>
+</html>
